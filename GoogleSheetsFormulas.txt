@@ -1,0 +1,16 @@
+Search Formula:
+
+=IFERROR(QUERY(INDIRECT($B$1),"SELECT Col5, Col1, Col2, Col3, Col4 WHERE "&
+IF(ISBLANK($C$4),"", "LOWER("&$D$4&") LIKE LOWER('%"&$C$4&"%')") &
+IF(ISBLANK($C$5), "", IF(ISBLANK($C$4), "", " AND ") & "LOWER("&$D$5&") LIKE LOWER('%"&$C$5&"%')") &
+IF(ISBLANK($C$6), "", IF(AND(ISBLANK($C$4), ISBLANK($C$5)), "", " AND ") & "LOWER("&$D$6&") LIKE LOWER('%"&$C$6&"%')")&" ORDER BY Col1"), "No Search Results")
+
+Combo Formula:
+
+=ARRAYFORMULA(QUERY({TheBeatles!$B$5:$E, RIGHT(ROW(TheBeatles!$B$5:$E)&"TheBeatles", LEN("TheBeatles"));'Iron Maiden'!$B$5:$E, RIGHT(ROW('Iron Maiden'!$B$5:$E)&"Iron Maiden", LEN("Iron Maiden"));Queen!$B$5:$E, RIGHT(ROW(Queen!$B$5:$E)&"Queen", LEN("Queen"))},"SELECT * WHERE Col1 IS NOT NULL"))
+
+FIX_NAME custom formula:
+=UPPER(SUBSTITUTE(SUBSTITUTE(name, " ", ""),"-",""))
+
+FIX_NAME on a selected search column:
+=ARRAYFORMULA(FIX_NAME(B:B))
